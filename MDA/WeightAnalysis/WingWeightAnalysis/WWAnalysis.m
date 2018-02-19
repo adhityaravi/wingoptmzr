@@ -99,7 +99,7 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     fclose(fid);
     
     %% Calling EMWET
-    EMWET filename
+    EMWET(filename)
     
     %% Postp
     % Reading output from .weight file
