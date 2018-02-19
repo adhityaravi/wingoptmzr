@@ -18,7 +18,7 @@ function [Wf, Wto] = MDACoordinator(DesVar)
     % Wf           - Aircraft Fuel Weight
     % Wto          - Aircraft Take-Off Weight
 
-    %% prep
+    %% Prep
     % intial guess for Wf and Wto
     load InitialValues.mat
     Wf_c = Init.Wf;
@@ -63,7 +63,9 @@ function [Wf, Wto] = MDACoordinator(DesVar)
                  'specified tolerance value of %f'], res, eps);
     end
     
-    %% postp
+    %% Postp
     Wf = Wf_c;
     Wto = Wto_c;
+    
+end
         

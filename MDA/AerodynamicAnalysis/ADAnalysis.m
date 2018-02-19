@@ -1,5 +1,5 @@
-% script to perform the aerodynamic analysis on the Aircraft to estimate
-% the Drag and Lift
+% script to perform the aerodynamic analysis on the Aircraft wing to 
+% estimate the Drag and Lift
 
 function [D, L] = ADAnalysis(Wf, Wto, DesVar)
 
@@ -17,25 +17,25 @@ function [D, L] = ADAnalysis(Wf, Wto, DesVar)
     % D          - Aircraft Drag in N
     % L          - Aircraft Lift in N
     
-    %% prep
+    %% Prep
     % CL calculation
     load FlyingConditions.mat
     Wc = Wto - (0.4*Wf); % Aircraft Cruise Weight in kg
     L = Wc * 9.81; % Aircraft Lift in N
     V = FC.M * FC.Air.a; % Aircraft Velocity
-    S = 0.5 * (DesVar.PG.cr+DesVar.PG.ct) * DesVar.PG.hs; % Area of one Wing
+    S = 2 * 0.5 * (DesVar.PG.cr+DesVar.PG.ct) * DesVar.PG.hs; % Wing Area
     CL = L / (0.5*FC.Air.rho*V*V*S);
     
     % Aircraft Wing Geometry Calculation
     %       x                                y             z  chord (m)     twist angle
-    Root = [0,                               0,            0, DesVar.PG.cr, 0];
+    Root = [0                              , 0           , 0, DesVar.PG.cr, 0];
     Tip  = [tand(DesVar.PG.sa)*DesVar.PG.hs, DesVar.PG.hs, 0, DesVar.PG.ct, 0];
     
     % Re calculation
     MAC = DesVar.PG.cr - (2*(DesVar.PG.cr-DesVar.PG.ct)*...
           (0.5*DesVar.PG.cr + DesVar.PG.ct) / ...
           (3*(DesVar.PG.cr + DesVar.PG.ct))); % Mean Aerodynamic Chord
-    Re = (FC.Air.rho * V * MAC) / (FC.Air.mu);
+    Re = (FC.Air.rho*V*MAC) / (FC.Air.mu);
     
     %% Solver setting for Q3D
     % Wing planform geometry
@@ -66,10 +66,12 @@ function [D, L] = ADAnalysis(Wf, Wto, DesVar)
     %% Calling the Q3D solver
     Res = Q3D_solver(AC);
     
-    %% postp
+    %% Postp
     % Total Drag calculation
     D0 = 10.3446e3; % Drag from fuselage, tail... in N (specific to this aircraft)
     D = D0 + (0.5*FC.Air.rho*V*V*S*Res.CDwing);
+    
+end
     
     
     
