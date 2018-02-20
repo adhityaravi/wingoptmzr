@@ -47,6 +47,7 @@ function [Wf, Wto] = MDACoordinator(DesVar)
         % Aircraft Take-Off Weight Analysis
         [Wto_n] = TOWAnalysis(Ww_n, Wf_n);
         
+        % Residue calculation
         res = norm([Ww_n-Ww_c, Wf_n-Wf_c, Wto_n-Wto_c]);
         i = i+1;
         
@@ -66,6 +67,5 @@ function [Wf, Wto] = MDACoordinator(DesVar)
     %% Postp
     Wf = Wf_c;
     Wto = Wto_c;
-    
 end
         

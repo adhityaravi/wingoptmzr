@@ -1,13 +1,14 @@
-% script to add all the subfolders of the current folder to the matlab
-% search path
+% script for File Management
 
 function fixPath()
 
-global HomeDir
-HomeDir = pwd;
+    % NOTE: make sure that this function is always in the Home Folder: ACWingOptimizer
+    global HomeDir
+    HomeDir = pwd;
 
-here = mfilename('fullpath');
-[path, ~, ~] = fileparts(here);
-addpath(genpath(path));
+    % Adding subfolders to Matlab search path
+    here = mfilename('fullpath');
+    [path, ~, ~] = fileparts(here);
+    addpath(genpath(path));
 
 end
