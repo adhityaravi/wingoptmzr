@@ -45,7 +45,7 @@ function [I] = initiate(Wf, Wto, DesVar)
     
     % Section 2
     I.Wing(2).WingSection.Chord = DesVar.PG.ct; % m
-    I.Wing(2).WingSection.Xle = tand(DesVar.PG.sa)*DesVar.PG.hs;
+    I.Wing(2).WingSection.Xle = tand(DesVar.PG.sa) * DesVar.PG.hs;
     I.Wing(2).WingSection.Yle = DesVar.PG.hs;
     I.Wing(2).WingSection.Zle = 0;
     I.Wing(2).WingSection.FrontSparPosition = 0.20;
@@ -80,14 +80,14 @@ function [I] = initiate(Wf, Wto, DesVar)
     I.Material.Wing.FrontSpar.Sigma_compressive = 4.6e8;
     
     % Rear Spar Material
-    I.Material.Wing.RearSpar.E = 7.1e10;
+    I.Material.Wing.RearSpar.E = 7.0e10;
     I.Material.Wing.RearSpar.rho = 2800;
     I.Material.Wing.RearSpar.Sigma_tensile =4.8e8;
     I.Material.Wing.RearSpar.Sigma_compressive = 4.6e8;
     
     % Structure Properties
-    I.Structure.Wing.UpperPanelEfficiency=0.96; % Z type stringers 
-    I.Structure.Wing.RibPitch =0.5;
+    I.Structure.Wing.UpperPanelEfficiency = 0.96; % Z type stringers 
+    I.Structure.Wing.RibPitch = 0.5;
     
 end
     

@@ -2,6 +2,7 @@
 % estimate the value of wing weight
 
 function [Ww] = WWAnalysis(Wf, Wto, DesVar)
+    global HomeDir
 
     % input variables 
     % ---------------------------------------------------------------------
@@ -20,13 +21,6 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     load FlyingConditions.mat
     filename = 'optwing';
     
-    % Removing pre-existing data
-    if exist([filename '.load'], 'file')
-        delete ([filename '.load'])
-        delete ([filename '.init'])
-        delete ([filename '.weight'])
-    end
-    
     % Display option for EMWET
     DisplayOption = 0; % 0 -> No / 1 -> Yes
     
@@ -38,7 +32,7 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     
     % Dynamic pressure calculation
     V = FC.M * FC.Air.a; % Aircraft Velocity
-    q = 0.5 * FC.Air.rho * V * V;
+    q = 0.5 * FC.Air.rho * V * V; 
     
     % Mean Aerodynamic Chord calculation
     MAC = DesVar.PG.cr - (2*(DesVar.PG.cr-DesVar.PG.ct)*...
@@ -51,6 +45,8 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     AS.T = interp1(Res.Wing.Yst,Res.Wing.cm_c4.*Res.Wing.chord*q*MAC,AS.Y*I.Wing(1).Span/2,'spline'); % pitching moment distribution
     
     %% Creating .init file for EMWET
+    CP = pwd;
+    cd ([HomeDir '\Storage']) % writing files in the Storage folder
     fid = fopen([filename '.init'], 'wt'); 
     
     % Design weight
@@ -108,8 +104,11 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     fclose(fid);
     
     out = OUT{1};
-    
     Ww = str2double (out(4));
+    
+    % Removing pre-existing data
+    removeData(filename, I); 
+    cd (CP)
     
 end
     

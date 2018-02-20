@@ -2,6 +2,7 @@
 % EMWET
 
 function [Res] = solveQ3D(Wto, DesVar)
+    global HomeDir
 
     % input variables 
     % ---------------------------------------------------------------------
@@ -62,6 +63,9 @@ function [Res] = solveQ3D(Wto, DesVar)
     %AC.Aero.Alpha = 2;       % angle of attack -  comment this line to run the code for given cl
     
     %% Calling the Q3D solver
+    CP = pwd;
+    cd (HomeDir) % make sure Q3D is always called from the Home Directory (for acessing xfoil and avl)
     Res = Q3D_solver(AC);
+    cd (CP)
     
 end

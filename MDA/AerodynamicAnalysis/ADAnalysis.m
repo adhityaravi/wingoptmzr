@@ -2,6 +2,7 @@
 % estimate the Drag and Lift
 
 function [D, L] = ADAnalysis(Wf, Wto, DesVar)
+    global HomeDir
 
     % input variables 
     % ---------------------------------------------------------------------
@@ -64,7 +65,10 @@ function [D, L] = ADAnalysis(Wf, Wto, DesVar)
     %AC.Aero.Alpha = 2;       % angle of attack -  comment this line to run the code for given cl
     
     %% Calling the Q3D solver
+    CP = pwd;
+    cd (HomeDir) % making sure Q3D is always called from the Home Directory (for acessing xfoil and avl) 
     Res = Q3D_solver(AC);
+    cd (CP)
     
     %% Postp
     % Total Drag calculation
