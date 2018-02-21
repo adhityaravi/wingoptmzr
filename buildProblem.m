@@ -17,7 +17,7 @@ function [problem] = buildProblem
         dimAF = dimAF + numel(DVAirfoil{i});
     end
     dim = dimAF+dimPG;
-    DV0 = ones(dim, 1);
+    DV0 = ones(1, dim);
     
     %% Objective Function
     function f = obj(DV)
@@ -52,16 +52,16 @@ function [problem] = buildProblem
     end
 
     %% Bounds for Design Variables
-    ub = zeros(dimAF+dimPG, 1);
-    lb = zeros(dimAF+dimPG, 1);
+    ub = zeros(1, dimAF+dimPG);
+    lb = zeros(1, dimAF+dimPG);
     
     % Bounds for Airfoil CST's
     ub(1:dimAF) = DV0(1:dimAF) + 1.2*DV0(1:dimAF);
     lb(1:dimAF) = DV0(1:dimAF) - 1.2*DV0(1:dimAF);
     
     % Bounds for Planform Geometry
-    ub((dimAF+1):dim) = DV0((dimAF+1):dim) + 2*DV0((dimAF+1):dim);
-    lb((dimAF+1):dim) = DV0((dimAF+1):dim) - 0.3*DV0((dimAF+1):dim);
+    ub((dimAF+1):dim) = 3 * DV0((dimAF+1):dim);
+    lb((dimAF+1):dim) = 0.3 * DV0((dimAF+1):dim);
       
     %% Creating function handles and options for fmincon
     objective = @(DV) obj(DV);
