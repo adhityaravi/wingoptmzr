@@ -1,0 +1,23 @@
+Run Conditions :
+
+	Finite Difference Step Size	:	1e-2
+	Bounds 				:	0.5 - 2
+	Time Taken			:	146226.671589 s
+
+
+Matlab Stopping Criteria :
+
+	Optimization stopped because the relative changes in all elements of x are
+	less than options.TolX = 1.000000e-06, and the relative maximum constraint
+	violation, 0.000000e+00, is less than options.TolCon = 1.000000e-06.
+
+	Optimization Metric                                         Options
+	max(abs(delta_x./x)) =   7.26e-07                    TolX =   1e-06 (default)
+	relative max(constraint violation) =   0.00e+00    TolCon =   1e-06 (default)
+
+Fmincon Ouput (Initial and Final) :
+
+ 	                                                         Norm of First-order
+ 	Iter F-count            f(x) Feasibility  Steplength        step  optimality
+	   0      25    1.000321e+00   2.890e-05                           1.465e-02
+	  33    1029    9.805262e-01   0.000e+00   1.104e-05   1.831e-06   1.657e-02
