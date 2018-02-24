@@ -22,7 +22,7 @@ function [Ww] = WWAnalysis(Wf, Wto, DesVar)
     filename = 'optwing';
     
     % Display option for EMWET
-    DisplayOption = 0; % 0 -> No / 1 -> Yes
+    DisplayOption = 0; % 0 -> Off / 1 -> On
     
     % Initiator for EMWET
     I = initiate(Wf, Wto, DesVar);

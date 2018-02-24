@@ -18,7 +18,7 @@ function [D, L] = ADAnalysis(Wf, Wto, DesVar)
     % D          - Aircraft Drag in N
     % L          - Aircraft Lift in N
     
-    %% Prep
+    %% PreP
     % CL calculation
     load FlyingConditions.mat
     Wc = Wto - (0.4*Wf); % Aircraft Cruise Weight in kg
@@ -66,11 +66,11 @@ function [D, L] = ADAnalysis(Wf, Wto, DesVar)
     
     %% Calling the Q3D solver
     CP = pwd;
-    cd (HomeDir) % making sure Q3D is always called from the Home Directory (for acessing xfoil and avl) 
+    cd (HomeDir) % making sure Q3D is always called from the Home Directory (for accessing xfoil and avl) 
     Res = Q3D_solver(AC);
     cd (CP)
     
-    %% Postp
+    %% PostP
     % Total Drag calculation
     D0 = 10.3446e3; % Drag from fuselage, tail... in N (specific to this aircraft)
     D = D0 + (0.5*FC.Air.rho*V*V*S*Res.CDwing);

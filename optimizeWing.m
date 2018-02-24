@@ -6,7 +6,7 @@ clear;
 clc;
 
 %% PreP
-% File Management
+% 
 fixPath();
 
 % Initial Data input
@@ -20,10 +20,10 @@ Init.AF.root = [0.257751849773405,0.284778157335682,0.149584217447372,0.24132412
 % CST's Tip Airfoil
 Init.AF.tip = [0.215492118995331,0.244049491852961,0.113945417074960,0.207168725501259,0.159975209942053,-0.128546762088269,-0.0564181201204965,-0.210720137310721,-0.0335971762440515,-0.176632769400283];
 % Initial Planform Geometry
-Init.PG.cr = 3.5;   % Root Chord
-Init.PG.ct = 0.9;   % Tip Chord
-Init.PG.hs = 14;    % Half Span
-Init.PG.sa = 5;     % Sweep Angle
+Init.PG.cr = 3.5;   % Root Chord in m
+Init.PG.ct = 0.9;   % Tip Chord in m
+Init.PG.hs = 14;    % Half Span in m
+Init.PG.sa = 5;     % Sweep Angle in deg
 
 save('InitialValues.mat', 'Init');
 
@@ -31,7 +31,7 @@ save('InitialValues.mat', 'Init');
 FC.alt = 10000; % Altitude in m
 FC.M = 0.55;    % Mach
 % Air properties at specified altitude
-FC.Air.a = 299.46;      % Sound of Speed in m/s
+FC.Air.a = 299.46;      % Speed of Sound in m/s
 FC.Air.rho = 0.4127;    % Air Density in kg/m^3
 FC.Air.mu = 1.4688e-5;  % Dynamic Viscosity of Air in Pa.s
 
@@ -48,4 +48,5 @@ fprintf('Optimized in %f seconds', t);
 
 %% PostP
 DesVar_opt = rescale(DV_opt);
+comparePlot(DesVar_opt);
 

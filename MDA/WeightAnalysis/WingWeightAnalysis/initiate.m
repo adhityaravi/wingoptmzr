@@ -53,18 +53,18 @@ function [I] = initiate(Wf, Wto, DesVar)
     
     %% Fuel Tank Geometry
     I.WingFuelTank.Ystart = 0.1; % start position at the semi-span
-    I.WingFuelTank.Yend = 0.7; % end position at the semi-span
+    I.WingFuelTank.Yend = 0.7;   % end position at the semi-span
     
     %% Engine Specification
     I.PP(1).WingEngineNumber = 1;  
     I.PP(1).EnginePosition = 0.25; % position at the semi-span
-    I.PP(1).EngineWeight = 1200; % in kg
+    I.PP(1).EngineWeight = 1200;   % in kg
     
     %% Material and Structure (Al alloy 7075-T6 used here)
     % Upper Panel Material
-    I.Material.Wing.UpperPanel.E = 7.0e10; % Young's modulus N/m^2
-    I.Material.Wing.UpperPanel.rho = 2800; % Density kg/m^3
-    I.Material.Wing.UpperPanel.Sigma_tensile = 4.8e8; % tensile stress N/m^2
+    I.Material.Wing.UpperPanel.E = 7.0e10;                % Young's modulus N/m^2
+    I.Material.Wing.UpperPanel.rho = 2800;                % Density kg/m^3
+    I.Material.Wing.UpperPanel.Sigma_tensile = 4.8e8;     % tensile stress N/m^2
     I.Material.Wing.UpperPanel.Sigma_compressive = 4.6e8; % compressive stress N/m^2
     
     % Lower Panel Material

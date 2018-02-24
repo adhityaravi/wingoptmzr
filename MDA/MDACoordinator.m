@@ -27,7 +27,7 @@ function [Wf, Wto] = MDACoordinator(DesVar)
 
     % tolerance on consistency and maximum number of allowed iterations
     eps = 1e-1;
-    itermax = 1000;
+    itermax = 100;
     i = 1;
     res = 1;
     

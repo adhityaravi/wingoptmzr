@@ -12,7 +12,8 @@ function [sol] = normalize(varargin)
     % ---------------------------------------------------------------------
     % sol      - value of input normalized with initial value
     
-    %% Normalizing Objective Function
+    %% Normalizing 
+    % Objective Function
     if nargin == 1
         
         load InitialValues.mat
@@ -20,7 +21,8 @@ function [sol] = normalize(varargin)
         
         % Normalized Objective Function
         sol = Wf / Init.Wf;
-        
+    
+    % Constraints
     else
         
         load InitialValues.mat
