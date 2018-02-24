@@ -26,7 +26,7 @@ function [Wf, Wto] = MDACoordinator(DesVar)
     Ww_c = Init.Ww;
 
     % tolerance on consistency and maximum number of allowed iterations
-    eps = 1e-6;
+    eps = 1e-1;
     itermax = 1000;
     i = 1;
     res = 1;

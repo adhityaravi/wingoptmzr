@@ -19,13 +19,21 @@ function [problem] = buildProblem
     dim = dimAF+dimPG;
     DV0 = ones(1, dim);
     
+    % Global values to be shared
+    DVlast = [];
+    Wf = [];
+    Wto = [];
+    
     %% Objective Function
     function f = obj(DV)
         
         % Re-Scaling Design Vector
-        DesVar = rescale(DV);
-        % MDA run 1
-        [Wf, ~] = MDACoordinator(DesVar);
+        DesVar = rescale(DV); 
+        % MDA run 
+        if ~isequal(DV, DVlast) % Checking if MDA run is necessary
+            [Wf, Wto] = MDACoordinator(DesVar);
+            DVlast = DV;
+        end
         % Normalizing Objective Value
         f = normalize(Wf);
         
@@ -36,9 +44,12 @@ function [problem] = buildProblem
         
         % Inequality constraint
         % Re-Scaling Design Vector
-        DesVar = rescale(DV);
-        % MDA run 2
-        [~, Wto] = MDACoordinator(DesVar); 
+        DesVar = rescale(DV); 
+        % MDA run 
+        if ~isequal(DV, DVlast) % Checking if MDA run is necessary
+            [Wf, Wto] = MDACoordinator(DesVar); 
+            DVlast = DV;
+        end
         % Wing Loading calculation 
         WL = Wto / (2 * 0.5 * (DesVar.PG.cr+DesVar.PG.ct) * DesVar.PG.hs);
         % Aspect Ratio calculation
@@ -56,22 +67,21 @@ function [problem] = buildProblem
     lb = zeros(1, dimAF+dimPG);
     
     % Bounds for Airfoil CST's
-    ub(1:dimAF) = DV0(1:dimAF) + 1.2*DV0(1:dimAF);
-    lb(1:dimAF) = DV0(1:dimAF) - 1.2*DV0(1:dimAF);
+    ub(1:dimAF) = 2 * DV0(1:dimAF);
+    lb(1:dimAF) = 0.5 * DV0(1:dimAF);
     
     % Bounds for Planform Geometry
-    ub((dimAF+1):dim) = 3 * DV0((dimAF+1):dim);
-    lb((dimAF+1):dim) = 0.3 * DV0((dimAF+1):dim);
+    ub((dimAF+1):dim) = 2 * DV0((dimAF+1):dim);
+    lb((dimAF+1):dim) = 0.5 * DV0((dimAF+1):dim);
       
     %% Creating function handles and options for fmincon
     objective = @(DV) obj(DV);
     constraint = @(DV) con(DV);
     
     options = optimoptions(@fmincon,'Algorithm', 'sqp',...
-                           'Display', 'off',... 
+                           'Display', 'iter-detailed',... 
                            'FinDiffRelStep', 1e-2,...
-                           'PlotFcn', {@optimplotfunccount, @optimplotfval,...
-                           @optimplotstepsize, @optimplotfirstorderopt});
+                           'PlotFcn', {@optimplotfunccount, @optimplotfval, @optimplotstepsize, @optimplotfirstorderopt, @optimplotconstrviolation});
                        
     %% Creating the problem struct for fmincon
     problem.x0 = DV0;
