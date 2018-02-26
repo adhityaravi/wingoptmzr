@@ -67,12 +67,12 @@ function [problem] = buildProblem
     lb = zeros(1, dimAF+dimPG);
     
     % Bounds for Airfoil CST's
-    ub(1:dimAF) = 2 * DV0(1:dimAF);
-    lb(1:dimAF) = 0.5 * DV0(1:dimAF);
+    ub(1:dimAF) = 2.5 * DV0(1:dimAF);
+    lb(1:dimAF) = -0.05 * DV0(1:dimAF);
     
     % Bounds for Planform Geometry
-    ub((dimAF+1):dim) = 2 * DV0((dimAF+1):dim);
-    lb((dimAF+1):dim) = 0.5 * DV0((dimAF+1):dim);
+    ub((dimAF+1):dim) = 2.5 * DV0((dimAF+1):dim);
+    lb((dimAF+1):dim) = 0.3 * DV0((dimAF+1):dim);
       
     %% Creating function handles and options for fmincon
     objective = @(DV) obj(DV);
@@ -80,7 +80,7 @@ function [problem] = buildProblem
     
     options = optimoptions(@fmincon,'Algorithm', 'sqp',...
                            'Display', 'iter-detailed',... 
-                           'FinDiffRelStep', 1e-2,...
+                           'FinDiffRelStep', 0.03,...
                            'PlotFcn', {@optimplotfunccount, @optimplotfval, @optimplotstepsize, @optimplotfirstorderopt, @optimplotconstrviolation});
                        
     %% Creating the problem struct for fmincon
@@ -93,6 +93,3 @@ function [problem] = buildProblem
     problem.options = options;
     
 end
-
-    
-    
