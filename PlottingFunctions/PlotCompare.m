@@ -1,6 +1,6 @@
 % script to perform a Plot Comparison between initial and optimized wing
 
-function PlotCompare(DesVar)
+function PlotCompare(DesVar, PlotName)
 
     % input variables
     % ---------------------------------------------------------------------
@@ -10,6 +10,9 @@ function PlotCompare(DesVar)
     %                    Airfoils          : root airfoil, tip airfoil]
                
     %% PreP
+    if nargin == 1
+        PlotName = 'ComparisonPlot';
+    end
     Init = load('InitialValues.mat');
     
     % Initial Airfoil Coordinates
@@ -31,7 +34,8 @@ function PlotCompare(DesVar)
     [xOptPGC, yOptPGC] = buildPGC(DesVar);
     
     %% Plotting Operation
-    figure('Name', 'Comparison Plot')
+    close(findobj('type', 'figure', 'name', 'DebugPlot'))
+    figure('Name', PlotName)
     % Root Airfoil Comparison
     subplot(3, 1, 1)
     plot(xInitRootAFC, yInitRootAFC, 'B+-')

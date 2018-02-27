@@ -1,6 +1,6 @@
 % script to plot the given Wing Geometry
 
-function PlotWing(DesVar, WingName)
+function PlotWing(DesVar, PlotName)
 
     % input variables
     % ---------------------------------------------------------------------
@@ -8,11 +8,10 @@ function PlotWing(DesVar, WingName)
     %                   [Planform Geometry : root chord, tip chord, 
     %                                        sweep angle, half span
     %                    Airfoils          : root airfoil, tip airfoil]
-    % WingName     - Name of the Wing to be plotted 
-    %% PreP
-    
+    % WingName     - Name of the Wing to be plotted (optional) 
+    %% PreP   
     if nargin == 1
-        WingName = 'Wing Plot';
+        PlotName = 'WingPlot';
     end
     
     % Fetching Airfoil Coordinates
@@ -25,7 +24,8 @@ function PlotWing(DesVar, WingName)
     [xPGC, yPGC] = buildPGC(DesVar);
     
     %% Plotting Operation
-    figure('Name', WingName)
+    close(findobj('type', 'figure', 'name', 'DebugPlot'))
+    figure('Name', PlotName)
     % Root Airfoil Plot
     subplot(3, 1, 1)
     plot(xRootAFC, yRootAFC, 'B+-')
@@ -42,10 +42,11 @@ function PlotWing(DesVar, WingName)
     
     % Planform Geometry Plot
     subplot(3, 1, 3)
-    plot(xPGC, yPGC, 'B+-')
+    P1 = plot(xPGC, yPGC, 'B+-');
+    set(P1, 'LineWidth', 2);
     title('Planform Geometry')
-    xlabel('x/c')
-    ylabel('y/c')
+    xlabel('x')
+    ylabel('y')
     
 end
     

@@ -1,7 +1,8 @@
 % script to build the Optimization Problem
 
 function [problem] = buildProblem
-
+    global DebugMode
+    
     % output variables
     % ---------------------------------------------------------------------
     % problem   - structure containing the objective function, constraints,
@@ -29,6 +30,10 @@ function [problem] = buildProblem
         
         % Re-Scaling Design Vector
         DesVar = rescale(DV); 
+        % For Debugging
+        if strcmp(DebugMode, 'on')
+            PlotCompare(DesVar, 'DebugPlot')
+        end
         % MDA run 
         if ~isequal(DV, DVlast) % Checking if MDA run is necessary
             [Wf, Wto] = MDACoordinator(DesVar);
@@ -44,7 +49,11 @@ function [problem] = buildProblem
         
         % Inequality constraint
         % Re-Scaling Design Vector
-        DesVar = rescale(DV); 
+        DesVar = rescale(DV);
+        % For Debugging
+        if strcmp(DebugMode, 'on')
+            PlotCompare(DesVar, 'DebugPlot')
+        end
         % MDA run 
         if ~isequal(DV, DVlast) % Checking if MDA run is necessary
             [Wf, Wto] = MDACoordinator(DesVar); 
@@ -68,11 +77,11 @@ function [problem] = buildProblem
     
     % Bounds for Airfoil CST's
     ub(1:dimAF) = 2.5 * DV0(1:dimAF);
-    lb(1:dimAF) = -0.05 * DV0(1:dimAF);
+    lb(1:dimAF) = -0.1 * DV0(1:dimAF);
     
     % Bounds for Planform Geometry
     ub((dimAF+1):dim) = 2.5 * DV0((dimAF+1):dim);
-    lb((dimAF+1):dim) = 0.3 * DV0((dimAF+1):dim);
+    lb((dimAF+1):dim) = 0.2 * DV0((dimAF+1):dim);
       
     %% Creating function handles and options for fmincon
     objective = @(DV) obj(DV);
@@ -80,7 +89,7 @@ function [problem] = buildProblem
     
     options = optimoptions(@fmincon,'Algorithm', 'sqp',...
                            'Display', 'iter-detailed',... 
-                           'FinDiffRelStep', 0.03,...
+                           'FinDiffRelStep', 0.07,...
                            'PlotFcn', {@optimplotfunccount, @optimplotfval, @optimplotstepsize, @optimplotfirstorderopt, @optimplotconstrviolation});
                        
     %% Creating the problem struct for fmincon
